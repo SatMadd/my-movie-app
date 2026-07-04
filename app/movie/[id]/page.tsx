@@ -82,7 +82,7 @@ export default async function MovieDetailPage(props: MoviePageProps) {
   // Calculate NontonFilm community average rating
   const communityAverage =
     dbReviews.length > 0
-      ? dbReviews.reduce((sum, r) => sum + r.rating, 0) / dbReviews.length
+      ? dbReviews.reduce((sum: number, r) => sum + r.rating, 0) / dbReviews.length
       : null
 
   // Format runtime to hours and minutes
