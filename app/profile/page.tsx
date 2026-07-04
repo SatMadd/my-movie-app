@@ -99,7 +99,7 @@ export default async function ProfilePage() {
               <div className="flex flex-col items-center sm:items-start">
                 <span className="text-xl font-black text-[#F5C518]">
                   {reviews.length > 0
-                    ? (reviews.reduce((s: number, r) => s + r.rating, 0) / reviews.length).toFixed(1)
+                    ? (reviews.reduce((s: number, r: (typeof reviews)[number]) => s + r.rating, 0) / reviews.length).toFixed(1)
                     : '—'}
                 </span>
                 <span className="text-xs text-[#9A9AA2] font-medium">Avg Rating</span>
