@@ -6,6 +6,14 @@ import { getMovieDetails } from '@/lib/tmdb'
 import MovieCard from '@/components/movie-card'
 import type { Movie } from '@/types/tmdb'
 
+/** Exact type for rows returned by prisma.watchlistItem.findMany() */
+type WatchlistItem = {
+  id: number          // Int in schema
+  userId: string
+  movieId: number
+  addedAt: Date
+}
+
 export const metadata = {
   title: 'My Watchlist — NontonFilm',
   description: 'Movies you want to watch, saved in one place.',
@@ -22,7 +30,7 @@ export default async function WatchlistPage() {
   }
 
   // Get watchlist items from DB
-  const watchlistItems = await prisma.watchlistItem.findMany({
+  const watchlistItems: WatchlistItem[] = await prisma.watchlistItem.findMany({
     where: { userId: user.id },
     orderBy: { addedAt: 'desc' },
   })
@@ -31,7 +39,7 @@ export default async function WatchlistPage() {
   const movies: Movie[] = []
   if (watchlistItems.length > 0) {
     const results = await Promise.allSettled(
-      watchlistItems.map((item) => getMovieDetails(item.movieId))
+      watchlistItems.map((item: WatchlistItem) => getMovieDetails(item.movieId))
     )
     for (const result of results) {
       if (result.status === 'fulfilled') {

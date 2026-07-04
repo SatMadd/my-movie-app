@@ -11,6 +11,23 @@ import ReviewForm from '@/components/review-form'
 import ReviewCard from '@/components/review-card'
 import MovieCard from '@/components/movie-card'
 
+/** Exact type for review rows returned by prisma.review.findMany({ include: { user: true } }) */
+type ReviewWithUser = {
+  id: number          // Int in schema
+  userId: string
+  movieId: number
+  rating: number
+  body: string | null
+  createdAt: Date
+  updatedAt: Date
+  user: {
+    id: string
+    username: string
+    avatarColor: string | null
+    createdAt: Date
+  }
+}
+
 interface MoviePageProps {
   params: Promise<{
     id: string
@@ -67,7 +84,7 @@ export default async function MovieDetailPage(props: MoviePageProps) {
   }
 
   // Fetch NontonFilm Community Reviews from Prisma Database
-  const dbReviews = await prisma.review.findMany({
+  const dbReviews: ReviewWithUser[] = await prisma.review.findMany({
     where: {
       movieId: movieId,
     },
@@ -82,7 +99,7 @@ export default async function MovieDetailPage(props: MoviePageProps) {
   // Calculate NontonFilm community average rating
   const communityAverage =
     dbReviews.length > 0
-      ? dbReviews.reduce((sum: number, r: (typeof dbReviews)[number]) => sum + r.rating, 0) / dbReviews.length
+      ? dbReviews.reduce((sum: number, r: ReviewWithUser) => sum + r.rating, 0) / dbReviews.length
       : null
 
   // Format runtime to hours and minutes
@@ -289,7 +306,7 @@ export default async function MovieDetailPage(props: MoviePageProps) {
           {/* Review List */}
           <div className="flex flex-col gap-4 mt-2">
             {dbReviews.length > 0 ? (
-              dbReviews.map((rev) => (
+              dbReviews.map((rev: ReviewWithUser) => (
                 <ReviewCard
                   key={rev.id}
                   username={rev.user.username}

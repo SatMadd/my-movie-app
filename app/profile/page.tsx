@@ -7,6 +7,17 @@ import { getMovieDetails, getPosterUrl } from '@/lib/tmdb'
 import Image from 'next/image'
 import type { Movie } from '@/types/tmdb'
 
+/** Exact type for review rows returned by prisma.review.findMany() */
+type ReviewRow = {
+  id: number          // Int in schema
+  userId: string
+  movieId: number
+  rating: number
+  body: string | null
+  createdAt: Date
+  updatedAt: Date
+}
+
 export const metadata = {
   title: 'My Profile — NontonFilm',
   description: 'Your NontonFilm profile, watchlist stats, and reviews.',
@@ -34,7 +45,7 @@ export default async function ProfilePage() {
   }
 
   // Fetch profile, watchlist count, and reviews with movie IDs
-  const [profile, watchlistCount, reviews] = await Promise.all([
+  const [profile, watchlistCount, rawReviews] = await Promise.all([
     prisma.profile.findUnique({ where: { id: user.id } }),
     prisma.watchlistItem.count({ where: { userId: user.id } }),
     prisma.review.findMany({
@@ -42,6 +53,7 @@ export default async function ProfilePage() {
       orderBy: { updatedAt: 'desc' },
     }),
   ])
+  const reviews = rawReviews as ReviewRow[]
 
   if (!profile) {
     // Profile missing — redirect to complete setup or show error
@@ -52,7 +64,7 @@ export default async function ProfilePage() {
   const reviewedMovies: Record<number, Movie> = {}
   if (reviews.length > 0) {
     const results = await Promise.allSettled(
-      reviews.map((r) => getMovieDetails(r.movieId))
+      reviews.map((r: ReviewRow) => getMovieDetails(r.movieId))
     )
     results.forEach((result: PromiseSettledResult<Movie>, i: number) => {
       if (result.status === 'fulfilled') {
@@ -126,7 +138,7 @@ export default async function ProfilePage() {
 
           {reviews.length > 0 ? (
             <div className="flex flex-col gap-4">
-              {reviews.map((review) => {
+              {reviews.map((review: ReviewRow) => {
                 const movie = reviewedMovies[review.movieId]
                 return (
                   <div
