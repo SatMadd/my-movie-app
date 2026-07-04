@@ -91,9 +91,6 @@ export default function Navbar({ initialUser, initialProfile }: NavbarProps) {
 
       {/* Navigation links */}
       <div className="hidden sm:flex items-center gap-6 text-sm font-medium mr-auto pl-4">
-        <Link href="/browse" className="text-[#9A9AA2] hover:text-[#F5F5F3] transition-colors">
-          Browse
-        </Link>
         {user && (
           <Link href="/watchlist" className="text-[#9A9AA2] hover:text-[#F5F5F3] transition-colors">
             Watchlist
@@ -102,7 +99,7 @@ export default function Navbar({ initialUser, initialProfile }: NavbarProps) {
       </div>
 
       {/* Search Bar & Profile */}
-      <div className="flex items-center gap-4 flex-1 justify-end max-w-md sm:max-w-xs md:max-w-md ml-4">
+      <div className="flex items-center gap-6 flex-1 justify-end max-w-md ml-4">
         <form onSubmit={handleSearchSubmit} className="relative w-full">
           <input
             type="text"
@@ -153,18 +150,20 @@ export default function Navbar({ initialUser, initialProfile }: NavbarProps) {
             )}
           </div>
         ) : (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
             <Link
               href="/login"
-              className="text-xs font-bold text-[#F5F5F3] hover:text-[#F5C518] px-3 py-1.5 transition-colors"
+              className="text-sm font-semibold text-[#9A9AA2] hover:text-[#F5F5F3] hover:bg-[#26272C]/60 h-[34px] px-3.5 sm:px-4 rounded-full transition-all flex items-center justify-center"
             >
-              Log In
+              <span className="sm:hidden">👤</span>
+              <span className="hidden sm:inline">Log In</span>
             </Link>
             <Link
               href="/register"
-              className="text-xs font-bold bg-[#E11D2E] text-[#F5F5F3] hover:bg-[#c11726] px-3 py-1.5 rounded transition-colors"
+              className="text-sm font-semibold bg-[#E11D2E] text-[#F5F5F3] hover:bg-[#c11726] h-[34px] px-3.5 sm:px-4 rounded-full transition-all flex items-center justify-center"
             >
-              Sign Up
+              <span className="sm:hidden">➕</span>
+              <span className="hidden sm:inline">Sign Up</span>
             </Link>
           </div>
         )}
