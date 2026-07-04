@@ -1,0 +1,43 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Profile {
+  id          String          @id
+  username    String          @unique
+  avatarColor String?         @map("avatar_color")
+  createdAt   DateTime        @default(now()) @map("created_at") @db.Timestamptz
+  watchlist   WatchlistItem[]
+  reviews     Review[]
+
+  @@map("profiles")
+}
+
+model WatchlistItem {
+  id      Int      @id @default(autoincrement())
+  userId  String   @map("user_id")
+  movieId Int      @map("movie_id")
+  addedAt DateTime @default(now()) @map("added_at") @db.Timestamptz
+  user    Profile  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, movieId])
+  @@map("watchlist_items")
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  userId    String   @map("user_id")
+  movieId   Int      @map("movie_id")
+  rating    Int      @db.SmallInt
+  body      String?
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt DateTime @default(now()) @updatedAt @map("updated_at") @db.Timestamptz
+  user      Profile  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, movieId])
+  @@map("reviews")
+}

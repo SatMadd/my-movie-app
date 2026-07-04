@@ -1,8 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0B0B0D;
+  --foreground: #F5F5F3;
+  --surface: #1A1B1F;
+  --surface-hover: #26272C;
+  --border: #33343A;
+  --muted: #9A9AA2;
+  --accent-yellow: #F5C518;
+  --accent-red: #E11D2E;
 }
 
 @theme inline {
@@ -12,15 +18,35 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+/* Always dark — no media query override needed */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+}
+
+/* Hide scrollbars while keeping scroll functionality */
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+/* Smooth scroll globally */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Focus rings - use yellow for dark theme accessibility */
+*:focus-visible {
+  outline: 2px solid #F5C518;
+  outline-offset: 2px;
+}
+
+/* Selection color */
+::selection {
+  background-color: #F5C518;
+  color: #0B0B0D;
 }
