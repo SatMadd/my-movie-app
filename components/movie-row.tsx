@@ -1,13 +1,14 @@
-import React from 'react'
+import Link from 'next/link'
 import { Movie } from '@/types/tmdb'
 import MovieCard from './movie-card'
 
 interface MovieRowProps {
   title: string
   movies: Movie[]
+  seeMoreUrl?: string
 }
 
-export default function MovieRow({ title, movies }: MovieRowProps) {
+export default function MovieRow({ title, movies, seeMoreUrl }: MovieRowProps) {
   if (!movies || movies.length === 0) return null
 
   return (
@@ -16,6 +17,14 @@ export default function MovieRow({ title, movies }: MovieRowProps) {
         <h2 className="text-xl md:text-2xl font-extrabold tracking-tight text-[#F5F5F3] border-l-4 border-[#E11D2E] pl-3">
           {title}
         </h2>
+        {seeMoreUrl && (
+          <Link
+            href={seeMoreUrl}
+            className="text-xs sm:text-sm font-semibold text-[#9A9AA2] hover:text-[#F5C518] transition-colors flex items-center gap-1"
+          >
+            See more <span className="text-[10px]">→</span>
+          </Link>
+        )}
       </div>
 
       {/* Horizontally scrollable row with snapping points */}

@@ -1,11 +1,11 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0B0B0D;
+  --background: #101013;
   --foreground: #F5F5F3;
-  --surface: #1A1B1F;
-  --surface-hover: #26272C;
-  --border: #33343A;
+  --surface: #1C1D22;
+  --surface-hover: #2A2B31;
+  --border: #34353C;
   --muted: #9A9AA2;
   --accent-yellow: #F5C518;
   --accent-red: #E11D2E;
@@ -48,5 +48,5 @@ html {
 /* Selection color */
 ::selection {
   background-color: #F5C518;
-  color: #0B0B0D;
+  color: #101013;
 }

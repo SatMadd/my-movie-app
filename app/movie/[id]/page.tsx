@@ -10,6 +10,7 @@ import WatchlistButton from '@/components/watchlist-button'
 import ReviewForm from '@/components/review-form'
 import ReviewCard from '@/components/review-card'
 import MovieCard from '@/components/movie-card'
+import TrackRecentlyViewed from '@/components/track-recently-viewed'
 
 /** Exact type for review rows returned by prisma.review.findMany({ include: { user: true } }) */
 type ReviewWithUser = {
@@ -114,7 +115,9 @@ export default async function MovieDetailPage(props: MoviePageProps) {
   const similar = movie.similar?.results.slice(0, 5) || []
 
   return (
-    <div className="flex flex-col flex-1 bg-[#0B0B0D]">
+    <div className="flex flex-col flex-1 bg-[#101013]">
+      {/* Silently track this movie visit for "Recently Viewed" section */}
+      <TrackRecentlyViewed movie={movie} />
       {/* Backdrop Hero block */}
       <section className="relative w-full min-h-[40vh] md:h-[60vh] flex items-end">
         {/* Backdrop Image */}
@@ -126,13 +129,13 @@ export default async function MovieDetailPage(props: MoviePageProps) {
             priority
             className="object-cover opacity-30 filter blur-[1px]"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0D] via-[#0B0B0D]/50 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#101013] via-[#101013]/50 to-transparent" />
         </div>
 
         {/* Header content overlay */}
         <div className="relative z-10 w-full max-w-6xl mx-auto px-4 md:px-8 pb-8 flex flex-col md:flex-row items-center md:items-end gap-6 md:gap-8">
           {/* Movie Poster */}
-          <div className="relative w-[180px] md:w-[220px] aspect-[2/3] rounded-lg overflow-hidden border border-[#33343A] shadow-2xl flex-shrink-0 bg-[#1A1B1F]">
+          <div className="relative w-[180px] md:w-[220px] aspect-[2/3] rounded-xl overflow-hidden border border-[#34353C] shadow-2xl flex-shrink-0 bg-[#1C1D22]">
             {movie.poster_path ? (
               <Image
                 src={getPosterUrl(movie.poster_path, 'w500')}

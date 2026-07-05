@@ -100,14 +100,14 @@ export default function HeroRotator({ movies }: HeroRotatorProps) {
   const nextBackdrop = getBackdropUrl(next.backdrop_path, 'original')
 
   return (
-    <section className="relative w-full h-[60vh] sm:h-[70vh] md:h-[80vh] flex flex-col justify-end bg-black overflow-hidden">
+    <section className="relative w-full min-h-[65vh] sm:min-h-[75vh] md:min-h-[85vh] flex flex-col justify-center bg-[#101013] overflow-hidden pt-16">
 
       {/* ── Preload next backdrop so the browser fetches it before the fade ── */}
       {/* eslint-disable-next-line @next/next/no-head-element */}
       <link rel="preload" as="image" href={nextBackdrop} />
 
-      {/* ── Backdrop layers ─────────────────────────────────────────────── */}
-      <div className="absolute inset-0">
+      {/* ── Backdrop layers (Key Art on the Right) ───────────────────────── */}
+      <div className="absolute right-0 top-0 bottom-0 w-full md:w-3/5 lg:w-[55%] h-full z-0 select-none pointer-events-none">
 
         {/* Layer A — current movie (always fully visible) */}
         <Image
@@ -116,8 +116,8 @@ export default function HeroRotator({ movies }: HeroRotatorProps) {
           alt={current.title}
           fill
           priority
-          sizes="100vw"
-          className="object-cover opacity-60"
+          sizes="(max-width: 768px) 100vw, 60vw"
+          className="object-cover opacity-50 md:opacity-75"
           style={{ transition: 'none' }}
         />
 
@@ -127,38 +127,33 @@ export default function HeroRotator({ movies }: HeroRotatorProps) {
           src={nextBackdrop}
           alt={next.title}
           fill
-          sizes="100vw"
-          className="object-cover opacity-60"
+          sizes="(max-width: 768px) 100vw, 60vw"
+          className="object-cover opacity-50 md:opacity-75"
           style={{
-            opacity: isFading ? 0.6 : 0,
+            opacity: isFading ? 0.75 : 0,
             transition: `opacity ${FADE_DURATION}ms ease-in-out`,
           }}
         />
 
-        {/* Gradient overlays — sit above both backdrops */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0B0B0D] via-transparent to-black/30" />
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0B0B0D]/80 via-[#0B0B0D]/20 to-transparent" />
+        {/* Gradient overlays — sit above both backdrops to blend them into background */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#101013] via-transparent to-[#101013]/30" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#101013] via-[#101013]/60 md:via-[#101013]/40 to-transparent" />
       </div>
 
-      {/* ── Hero Content ────────────────────────────────────────────────── */}
-      {/*
-          Content always reflects `current` — it only flips after the fade
-          completes inside the setTimeout, so text and backdrop are never
-          mismatched.
-      */}
+      {/* ── Hero Content (Aligned Left on Clean Background) ───────────────── */}
       <div
-        className="relative z-10 w-full max-w-4xl px-4 md:px-8 pb-10 sm:pb-16 flex flex-col gap-4"
+        className="relative z-10 w-full max-w-2xl px-4 md:px-8 py-10 sm:py-16 flex flex-col gap-5 mr-auto md:ml-4"
         style={{
           opacity: isFading ? 0 : 1,
           transition: `opacity ${FADE_DURATION}ms ease-in-out`,
         }}
       >
-        {/* Badges row */}
+        {/* Badges row as small rounded chips */}
         <div className="flex items-center gap-3">
-          <span className="bg-[#E11D2E] text-white text-xs font-black uppercase px-2 py-0.5 rounded tracking-wider">
+          <span className="bg-[#E11D2E] text-white text-[10px] sm:text-xs font-black uppercase px-3 py-1 rounded-full tracking-wider shadow-sm select-none">
             Trending Today
           </span>
-          <div className="flex items-center gap-1 bg-black/50 border border-white/10 rounded px-2 py-0.5 text-xs text-[#F5C518] font-bold">
+          <div className="flex items-center gap-1 bg-[#1C1D22] border border-[#34353C] rounded-full px-3 py-1 text-[10px] sm:text-xs text-[#F5C518] font-bold shadow-sm select-none">
             ⭐ {current.vote_average ? current.vote_average.toFixed(1) : 'N/A'}
           </div>
         </div>
@@ -169,7 +164,7 @@ export default function HeroRotator({ movies }: HeroRotatorProps) {
         </h1>
 
         {/* Overview */}
-        <p className="text-sm sm:text-base text-[#9A9AA2] max-w-2xl line-clamp-3 leading-relaxed">
+        <p className="text-sm sm:text-base text-[#9A9AA2] max-w-xl line-clamp-3 leading-relaxed">
           {current.overview}
         </p>
 
@@ -181,7 +176,7 @@ export default function HeroRotator({ movies }: HeroRotatorProps) {
         >
           <Link
             href={`/movie/${current.id}`}
-            className="bg-[#E11D2E] text-[#F5F5F3] hover:bg-[#c11726] font-bold text-sm sm:text-base px-6 py-3 rounded transition-all duration-300 transform hover:scale-[1.02] cursor-pointer"
+            className="bg-white hover:bg-[#F5F5F3] text-[#101013] font-bold text-sm sm:text-base px-7 py-3 rounded-full transition-all duration-300 transform hover:scale-[1.02] cursor-pointer shadow-md flex items-center justify-center"
             onFocus={pauseRotation}
             onBlur={resumeRotation}
           >
@@ -189,11 +184,11 @@ export default function HeroRotator({ movies }: HeroRotatorProps) {
           </Link>
           <Link
             href="/browse"
-            className="bg-transparent text-[#F5F5F3] border border-[#33343A] hover:bg-[#26272C]/40 hover:border-[#9A9AA2] font-bold text-sm sm:text-base px-6 py-3 rounded transition-all duration-300 cursor-pointer"
+            className="bg-transparent text-[#F5F5F3] border border-[#34353C] hover:bg-[#2A2B31]/40 font-bold text-sm sm:text-base px-7 py-3 rounded-full transition-all duration-300 flex items-center justify-center cursor-pointer"
             onFocus={pauseRotation}
             onBlur={resumeRotation}
           >
-            Browse Catalog
+            Browse Catalog <span className="ml-1 text-xs text-[#9A9AA2] font-normal">›</span>
           </Link>
         </div>
       </div>

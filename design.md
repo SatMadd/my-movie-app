@@ -1,105 +1,110 @@
-# design.md — NontonFilm Visual Design
+# design.md — NontonFilm Visual Design (v2)
 
-This document defines the look and feel of NontonFilm. It's meant to be read alongside `CLAUDE.md`. The attached TMDB screenshots are used only as a **layout/IA reference** (hero banner → trending row → filterable popular grid → community/leaderboard section → footer). Our brand identity — name, logo, and colors — is entirely our own.
+This replaces the previous TMDB-layout-inspired version of this document. The new direction is inspired by the attached "Moov" concept (Dribbble reference): softer dark background (near-black, not pure black), heavy use of rounded/pill shapes for buttons, chips, and nav items, a hero with the character/key art breaking out of its frame rather than a full-bleed dimmed backdrop, and a "Continue Watching" pattern with progress indicators. Brand name, stacked logo, and core palette (gray/black/yellow/red) stay as previously defined — this update is primarily about **shape language, layout rhythm, and a few new components**, not a brand change.
 
-## 1. Brand
+Read alongside `CLAUDE.md`.
+
+## 1. Brand (unchanged)
 
 - **Name:** NontonFilm
-- **Logo lockup:** stacked wordmark, two lines, tightly kerned:
+- **Logo lockup:** stacked wordmark —
   ```
   NONTON
   FILM
   ```
-  "NONTON" sits on top in the primary light/white tone; "FILM" sits directly below in the yellow accent, slightly bolder or same weight — the stack itself is the logo, no icon needed. Keep line-height tight (roughly 0.9–1x font size) so it reads as one lockup, not two separate words.
-- **Tone:** confident, cinematic, a little edgy — closer to a late-night movie theater marquee than a corporate database. Dark backgrounds, high-contrast accents, minimal chrome.
+  "NONTON" in off-white, "FILM" in yellow, tight line-height so it reads as one lockup. In the new nav (see §4) this can also appear as a compact single-line variant (icon-less wordmark, smaller point size) when horizontal space is tight — but the stacked version remains the primary logo wherever there's room.
+- **Tone:** shifts slightly with this update — still cinematic and confident, but now warmer/softer rather than stark. The reference's rounded shapes and generous spacing read as more "streaming app to unwind with" than "database to search." Keep that friendlier register in spacing and corner radii while keeping our red/yellow accents so it doesn't drift into generic streaming-app sameness.
 
-## 2. Color Palette
+## 2. Color Palette (refined, not replaced)
 
 | Role | Color | Hex | Usage |
 |---|---|---|---|
-| Background (primary) | Near-black | `#0B0B0D` | App background, nav, footer |
-| Surface | Charcoal gray | `#1A1B1F` | Cards, modals, inputs |
-| Surface (raised/hover) | Mid gray | `#26272C` | Hover state on cards, secondary buttons |
-| Border/divider | Gray | `#33343A` | Card borders, dividers |
+| Background (primary) | Soft near-black | `#101013` | App background — slightly warmer/softer than pure black, matching the reference's dark navy-black rather than `#000` |
+| Surface | Charcoal gray | `#1C1D22` | Cards, nav pill background, modals |
+| Surface (raised/hover) | Mid gray | `#2A2B31` | Hover state on cards and pills |
+| Border/divider | Gray | `#34353C` | Rarely needed now — the new layout leans on spacing and rounded surfaces instead of hard dividers; use sparingly |
 | Text (primary) | Off-white | `#F5F5F3` | Headings, body text |
-| Text (secondary) | Muted gray | `#9A9AA2` | Metadata, dates, captions |
-| Accent — Yellow | Marquee yellow | `#F5C518` | Ratings, badges, active tab, key highlights |
-| Accent — Red | Cinema red | `#E11D2E` | Primary CTAs ("Add to Watchlist," "Submit Review"), destructive actions, live/urgent tags |
+| Text (secondary) | Muted gray | `#9A9AA2` | Metadata, captions, inactive pill text |
+| Accent — Yellow | Marquee yellow | `#F5C518` | Ratings, active/selected states, key highlights |
+| Accent — Red | Cinema red | `#E11D2E` | Secondary CTA fill where used, destructive actions, live/urgent tags |
+| CTA — White | Pure/off-white | `#FFFFFF` | **New primary button fill**, replacing red as the default hero CTA (see §3) — mirrors the reference's white "Watch Now" pill, keeps red available as a distinct secondary accent rather than overusing it |
 
-Guidelines:
-- Yellow = **information/value** (ratings, scores, badges — things the user is scanning for).
-- Red = **action** (buttons the user clicks to do something).
-- Never place red text directly on black at small sizes — use it as a fill/background for buttons/badges instead, or bump size and weight if used as text, to protect contrast.
-- Keep large surfaces gray/black; let yellow and red stay accents, not fills for big areas — this keeps the app feeling premium rather than loud.
+Why the change: in the reference, the primary action button is white-on-dark rather than a saturated color, which reads as clean and premium against the busy character art. Adopting a white primary button for the hero's main CTA gives us that same clean contrast, while red is preserved for secondary/urgent accents (badges, active watch-progress bar, destructive actions) so it doesn't compete with the hero art. Yellow keeps its existing job: ratings and "this is the one that's active/selected" signaling.
 
-## 3. Typography
+## 3. Typography (unchanged, with one addition)
 
-- **Headings:** a tight, slightly condensed grotesque — e.g. `Inter` (700/800 weight) or `Poppins` (600/700). Large hero titles can go semi-bold/extrabold to feel like poster type.
-- **Body/UI text:** `Inter` (400/500), system-ui fallback stack.
-- **Numeric/ratings:** tabular figures where possible so rating badges don't jitter in width.
+- **Headings:** `Inter` (700/800) or `Poppins` (600/700), still slightly condensed for poster-like impact.
+- **Body/UI text:** `Inter` (400/500).
+- **Numeric/ratings:** tabular figures.
+- **New — pill/chip text:** slightly smaller (0.875rem), medium weight (500), all-lowercase-friendly casing is fine for genre chips (e.g. "action," "comedy") to match the reference's casual chip labels — title case elsewhere.
 
-Suggested scale (rem): 2.5 / 2 / 1.5 / 1.25 / 1 / 0.875, with 1.25–1.4 line-height for body, 1.05–1.15 for large headings.
+## 4. Navigation (new pattern)
 
-## 4. Layout Patterns (borrowing structure, not skin, from the reference screenshots)
+The reference uses a horizontal text nav (Home / Movies / Series / Kids) plus a cluster of circular icon buttons (search, notifications, avatar) on the right, all sitting directly on the dark background with no visible nav bar container. Adapt this:
 
-### Homepage
-1. **Navbar** — fixed, near-black, logo (stacked lockup, smaller/inline variant) on the left, search bar center-right, auth avatar (colored circle with initials, see §6) on the far right.
-2. **Hero** — full-width backdrop image of the top trending/newest release, dark gradient overlay bottom-up so title text stays legible, title + short overview + yellow rating badge + red "Watch Details" CTA.
-3. **Latest Releases** — horizontally scrollable row of movie cards, section header with a "This Week / Today"-style toggle if useful.
-4. **Popular Now** — grid/row with filter tabs (Streaming / In Theaters / For Rent), mirroring the reference's tab pattern but restyled: active tab pill in yellow, inactive tabs muted gray text on transparent background.
-5. **Browse by Release Date** — link/section leading to the full paginated catalog (`/browse`), newest first by default.
-6. **Footer** — link columns (About, Community, Legal), TMDB attribution notice (required, see CLAUDE.md §5), small and unobtrusive but present.
+- **Left:** Stacked logo (compact single-line variant if needed) + primary nav links (Home, Browse, Watchlist) as plain text, off-white, with a small underline or yellow dot indicator for the active page — no boxed/pill nav items, just clean text with generous letter-spacing.
+- **Right:** circular icon buttons for Search and Notifications (charcoal `#1C1D22` fill, off-white icon, hover lightens to `#2A2B31`), and the user's avatar as a circular initials badge (see existing avatar system) — same circular sizing as the icon buttons so the whole cluster reads as one consistent row of round elements.
+- **Logged-out state:** keep the two-button Log In / Sign Up group from the previous polish pass, but restyle to match this circular-icon energy — Log In as plain text (no border), Sign Up as a rounded pill (not a hard-cornered rectangle) using the red fill.
+- No visible nav bar background/border — let it float directly over the hero background, matching the reference's borderless top bar.
 
-### Movie detail page (`/movie/[id]`)
-- Full-width backdrop banner (dimmed) with poster overlapping bottom-left, similar to typical movie-detail heroes.
-- Meta row directly under title: release date · runtime · genre pills (gray pills, yellow text on hover/active).
-- **Rating badge:** circular, yellow fill, black bold number — for the TMDB score. A separate, visually distinct badge (outline style, yellow ring on charcoal fill) for the NontonFilm community average, clearly labeled so the two never get confused.
-- Overview paragraph, then a horizontally scrollable **cast row** (circular headshots, name + character name beneath).
-- **Reviews section** below cast: existing reviews as cards (avatar, username, star/number rating in yellow, review text, date), a "Write a Review" red button opens an inline form (rating input + textarea).
-- Sticky or prominent "Add to Watchlist" button near the title (icon toggles filled/red when active, outline gray when not).
+## 5. Hero Section (revised)
 
-### Auth pages (`/login`, `/register`)
-- Centered card, max-width ~400px, on the black background. Minimal fields, red primary button, yellow-underline link for switching between login/register.
+Previous version: full-width dimmed backdrop with text overlaid on top of a gradient. New direction, closer to the reference:
 
-### Watchlist / Profile (`/watchlist`, `/profile`)
-- Tabbed layout: "Watchlist" / "My Reviews," reusing the same movie-card grid component as the homepage for consistency.
-- Profile header: colored initials avatar, username, small stats (movies watchlisted, reviews written).
+- Key art (a movie's poster character/still) sits on the right side of the hero, allowed to extend toward/past the frame edge for visual energy — not necessarily dimmed or gradient-washed the way a full backdrop was.
+- Title, short description, and CTAs sit on the left on a clean section of the dark background (not on top of busy imagery), so text never needs a heavy overlay to stay legible.
+- **CTA pair:** primary button is the new white pill ("Watch Details" or similar), secondary is a dark/outline pill ("Browse Catalog") with a small trailing chevron — both fully rounded (pill radius, not just rounded corners).
+- Rating badge and "Trending Today"-style tag move to sit just above the title, as small rounded chips rather than a single squared-off label bar.
+- Retains the **auto-rotation behavior** already implemented (crossfade every 10s, pauses on hover/tab-hidden) — this update changes the hero's visual composition, not that logic.
 
-## 5. Core Components
+## 6. Movie Cards (revised — rounded, not sharp)
 
-- **Movie Card:** poster image (2:3 ratio), title truncated to 1–2 lines, release date in muted gray below, small yellow rating chip in the top-right corner of the poster (overlaid, semi-transparent black backing) — evokes the "trending" cards in the reference but restyled to our palette.
-- **Movie Row:** horizontally scrollable container of Movie Cards with a section title + optional "See all" link on the right.
-- **Rating Badge:** circular, two variants (TMDB / Community) as described above.
-- **Watchlist Button:** bookmark or heart icon; outline gray by default, filled red + subtle scale animation when active.
-- **Review Card:** initials avatar in a flat color (deterministic per user, from a small palette derived from the brand colors — gray, yellow, muted red-orange — similar in spirit to the colored initials seen in the reference's leaderboard), username, numeric rating shown as a small yellow badge, review text, relative date.
-- **Buttons:**
-  - Primary: red fill, off-white text, subtle darken on hover.
-  - Secondary: transparent/gray-outline, off-white text, fills light gray on hover.
-  - Tertiary/link: yellow text, underline on hover.
-- **Tabs/Pills:** inactive = muted gray text on transparent; active = yellow pill background with black text (high contrast, easy to scan which filter is active).
-- **Skeleton loaders:** dark gray shimmer blocks matching card dimensions for image-heavy grids while TMDB data loads.
+- Poster cards now use a **consistent rounded-corner radius** (e.g. `rounded-xl`/`~12-16px`) on every card across the app — trending row, popular grid, watchlist, continue watching — replacing the previous sharp-edged card treatment.
+- Rating chip overlay stays (top-corner, small rounded pill, yellow star icon + number, semi-transparent dark backing) but should now match the card's own corner radius family so it feels integrated rather than stamped on.
+- Title + year sit below the poster, same as before (off-white title, muted gray year).
+- Hover: slight scale-up (1.03–1.05) plus a soft shadow — keep motion from the previous spec, just apply it to the new rounded shape.
 
-## 6. Avatars & Identity touches
+## 7. New Component — Genre Filter Pills
 
-- Users without a profile photo get a circular initials avatar with a background color assigned from a small fixed set (charcoal, yellow, red-orange, mid-gray) based on a hash of their user id — consistent, no random reshuffling on reload.
+A horizontal row of rounded, fully-pill-shaped filter chips (e.g. "All Popular," "Action," "Animation," "Horror," "Documentary," "Romance," "Kids," "Comedy") sits above relevant movie rows (Popular Now, Browse).
 
-## 7. Motion & Interaction
+- **Inactive pill:** charcoal `#1C1D22` fill, muted gray text.
+- **Active pill:** off-white fill, near-black text — mirrors the reference's high-contrast "All Popular" selected state — this is now the preferred "selected" treatment for chips, replacing the earlier yellow-pill-active pattern for filters specifically (yellow stays reserved for ratings/scores so the two meanings don't blur).
+- Horizontally scrollable on overflow, no wrapping to a second line.
+- Clicking a pill filters the row/grid beneath it client-side (or refetches from TMDB `with_genres` if server-driven) — functional behavior for your engineering agent to wire up separately.
 
-- Cards: slight scale-up (1.03–1.05) + shadow lift on hover, ~150ms ease-out.
-- Carousels: smooth native scroll with snap points; optional arrow controls appear on hover for desktop, touch-scroll only on mobile.
-- Rating badges and watchlist toggle: quick scale/pulse on state change so the action feels acknowledged.
-- Keep motion subtle — this is a content-browsing app, not a game; nothing should distract from posters and text.
+## 8. New Component — Continue Watching
 
-## 8. Responsive Behavior
+For logged-in users with watch history (or, if NontonFilm doesn't track actual playback, this can be reframed as "recently viewed" movie detail pages — flag this to product/engineering before building, since our app is a discovery/review app, not a streaming player):
 
-- Navbar collapses search into an icon that expands on tap below `md` breakpoint; auth avatar and logo remain visible.
-- Movie rows stay horizontally scrollable at all breakpoints (touch-friendly on mobile, hover-arrow on desktop).
-- Hero section on mobile: reduce backdrop height, stack title/CTA vertically, keep rating badge visible.
-- Movie detail page: poster + backdrop collapse to stacked (backdrop on top, poster + info below) on narrow screens rather than overlapping.
+- Same rounded poster card as §6, with a centered circular translucent **play icon overlay** on hover (or always-visible at lower opacity, per the reference).
+- A **thin progress bar** anchored to the bottom edge of the poster, red fill over a muted gray track, showing how far the user got.
+- Section header "Continue Watching," same section-title styling as other rows (small red vertical accent bar + bold off-white label, consistent with the existing "Latest Releases" header treatment).
 
-## 9. Accessibility
+## 9. "See more" pattern + "Show More" button (finalized)
 
-- Maintain WCAG AA contrast: off-white (`#F5F5F3`) on near-black (`#0B0B0D`) passes easily; double-check yellow (`#F5C518`) and red (`#E11D2E`) against black background before using them as text color at small sizes — prefer them as fills with black/off-white text on top.
-- All posters/backdrops need descriptive `alt` text (movie title at minimum).
-- Interactive elements (watchlist toggle, tabs, rating input) need visible focus rings (a thin yellow outline works well against the dark theme) for keyboard navigation.
-- Star/number rating inputs should have accessible labels, not rely on color alone to convey selected value.
+The reference shows a lightweight "See more →" text link at the end of a row's header instead of a large standalone panel. Adopt this as the **row-level** pattern, and treat it as distinct from the bottom-of-page "Show More" button, which now has a specific, finalized job:
+
+- **Row-level "See more":** Trending, Popular Now, and Continue Watching each get a small "See more →" text link, right-aligned next to that row's title, off-white text that turns yellow on hover. Clicking it goes to that row's own filtered view (e.g. Trending's "See more" → `/browse?sort=trending`). These rows are static/curated — no in-place pagination, no loading state, just a link out.
+- **Bottom "Show More" button:** there is **no surrounding card/panel** and no "Looking for something specific?" copy anymore — just a single, large, standalone red pill button, "Show More," sitting at the very bottom of the homepage after the Latest Release row. It's a full navigation link, not an in-place fetch.
+- **Destination:** it links to the existing **Browse Movies** page (the one already built — sort pills for Release Date Newest/Oldest, Popularity High/Low, Rating High, plus the full paginated grid). No new page needs to be built for this. Since the button follows the Latest Release row, it should land on Browse Movies with the **"Release Date (Newest)"** sort pill pre-selected/active by default, so the transition feels continuous with what the user was just looking at.
+- Browse Movies' own pagination (whatever it already uses — page-based Next/Previous) stays as-is; this change is only about which button links there and with what default sort, not about rebuilding that page.
+- **Popular Now stays entirely static** — its own row-level "See more →" link only, no button, no pagination.
+
+## 10. Layout Rhythm
+
+- Increase vertical spacing between homepage sections slightly versus the previous spec (the reference reads as more breathable/generous) — aim for consistent large gaps (e.g. 48–64px) between sections rather than tightly stacked ones.
+- **Homepage section order:** Hero → Trending → Genre pills → Continue Watching → **Popular Now** → **Latest Release** → standalone "Show More" button. Popular Now sits above Latest Release (swapped from the earlier draft), with Latest Release as the last content section immediately before the "Show More" button, since that button is the doorway into the full Latest Release listing.
+- Section headers stay left-aligned with the small colored accent bar treatment already established; only the row-level "See more" link is right-aligned against that same header line.
+
+## 11. Responsive Behavior (unchanged principles, updated shapes)
+
+- Nav collapses the same way as previously specced (search → icon-only, auth group simplifies) but now everything collapses into circular icon buttons rather than boxed ones, staying consistent with the new nav language.
+- Genre filter pills and all movie rows remain horizontally scrollable at every breakpoint.
+- Hero stacks vertically on mobile: key art moves above or behind the text block at reduced opacity/size, text and CTAs stack full-width, pills remain fully rounded at all sizes.
+
+## 12. Accessibility (unchanged principles)
+
+- Recheck contrast now that background shifted from `#0B0B0D` to `#101013` and a new white (`#FFFFFF`) button fill was introduced — off-white/near-black text on the white CTA pill needs near-black (`#101013` or true black) text to pass AA comfortably; don't use gray text on the white button.
+- Active-state pills (genre filters, active nav item) must be distinguishable by more than color alone where feasible (e.g. weight change alongside the fill change) for users with color vision deficiencies.
+- All other accessibility notes from the previous version (alt text, focus rings, labeled rating inputs) still apply unchanged.

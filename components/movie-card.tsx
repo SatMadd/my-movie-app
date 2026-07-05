@@ -15,7 +15,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
 
   return (
     <Link href={`/movie/${movie.id}`} className="group block">
-      <div className="relative aspect-[2/3] w-full overflow-hidden rounded-lg bg-[#1A1B1F] border border-[#33343A] shadow-md transition-all duration-300 ease-out group-hover:scale-[1.03] group-hover:shadow-[0_8px_30px_rgb(0,0,0,0.5)] group-hover:border-[#26272C]">
+      <div className="relative aspect-[2/3] w-full overflow-hidden rounded-xl bg-[#1C1D22] border border-[#34353C] shadow-md transition-all duration-300 ease-out group-hover:scale-[1.03] group-hover:shadow-[0_8px_30px_rgb(0,0,0,0.5)] group-hover:border-[#2A2B31]">
         {movie.poster_path ? (
           <Image
             src={getPosterUrl(movie.poster_path, 'w500')}
@@ -33,7 +33,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
         )}
 
         {/* Rating Badge Overlay */}
-        <div className="absolute top-2 right-2 flex items-center justify-center rounded bg-black/75 px-1.5 py-0.5 text-xs font-bold text-[#F5C518] shadow">
+        <div className="absolute top-2 right-2 flex items-center justify-center rounded-xl bg-black/75 px-2.5 py-1 text-xs font-bold text-[#F5C518] shadow">
           ⭐ {movie.vote_average ? movie.vote_average.toFixed(1) : 'N/A'}
         </div>
       </div>

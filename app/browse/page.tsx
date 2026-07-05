@@ -53,15 +53,15 @@ export default async function BrowsePage(props: BrowsePageProps) {
   ]
 
   return (
-    <div className="flex-1 bg-[#0B0B0D] px-4 md:px-8 py-8">
+    <div className="flex-1 bg-[#101013] px-4 md:px-8 py-8">
       <div className="max-w-6xl mx-auto flex flex-col gap-6">
         {/* Header Block */}
-        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#33343A] pb-5">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-[#27272a] pb-5">
           <div>
-            <h1 className="text-2xl md:text-3xl font-extrabold text-[#F5F5F3] tracking-tight">
+            <h1 className="text-2xl md:text-3xl font-extrabold text-[#fafafa] tracking-tight">
               {query ? `Search Results for "${query}"` : 'Browse Movies'}
             </h1>
-            <p className="text-xs md:text-sm text-[#9A9AA2] mt-1">
+            <p className="text-xs md:text-sm text-[#a1a1aa] mt-1">
               Found {data.total_results || 0} movies
             </p>
           </div>
@@ -81,8 +81,8 @@ export default async function BrowsePage(props: BrowsePageProps) {
                       href={buildSortUrl(opt.value)}
                       className={`text-xs px-3 py-1.5 rounded-full font-bold select-none cursor-pointer border transition-all ${
                         isActive
-                          ? 'bg-[#F5C518] text-[#0B0B0D] border-[#F5C518]'
-                          : 'bg-transparent text-[#9A9AA2] border-[#33343A] hover:border-[#9A9AA2] hover:text-[#F5F5F3]'
+                          ? 'bg-[#F5F5F3] text-[#101013] border-[#F5F5F3]'
+                          : 'bg-transparent text-[#9A9AA2] border-[#34353C] hover:border-[#9A9AA2] hover:text-[#F5F5F3]'
                       }`}
                     >
                       {opt.label}
@@ -102,7 +102,7 @@ export default async function BrowsePage(props: BrowsePageProps) {
             ))}
           </div>
         ) : (
-          <div className="flex flex-col items-center justify-center py-20 text-center bg-[#1A1B1F] border border-[#33343A] rounded-xl p-8">
+          <div className="flex flex-col items-center justify-center py-20 text-center bg-[#1C1D22] border border-[#34353C] rounded-xl p-8">
             <span className="text-5xl">🕵️‍♂️</span>
             <h3 className="text-lg font-bold text-[#F5F5F3] mt-4">No Movies Found</h3>
             <p className="text-sm text-[#9A9AA2] max-w-sm mt-2">
@@ -110,7 +110,7 @@ export default async function BrowsePage(props: BrowsePageProps) {
             </p>
             <Link
               href="/browse"
-              className="mt-6 bg-[#E11D2E] text-white hover:bg-[#c11726] font-bold text-sm px-6 py-2.5 rounded transition-colors"
+              className="mt-6 bg-[#E11D2E] text-white hover:bg-[#c11726] font-bold text-sm px-6 py-2.5 rounded-full transition-colors"
             >
               Clear All Filters
             </Link>
@@ -119,17 +119,17 @@ export default async function BrowsePage(props: BrowsePageProps) {
 
         {/* Pagination Controls */}
         {totalPages > 1 && movies.length > 0 && (
-          <div className="flex items-center justify-center gap-2 border-t border-[#33343A] pt-8 mt-4 select-none">
+          <div className="flex items-center justify-center gap-2 border-t border-[#34353C] pt-8 mt-4 select-none">
             {/* Previous Page */}
             {page > 1 ? (
               <Link
                 href={buildPageUrl(page - 1)}
-                className="px-4 py-2 bg-[#1A1B1F] border border-[#33343A] hover:bg-[#26272C] text-sm font-bold text-[#F5F5F3] rounded transition-colors cursor-pointer"
+                className="px-4 py-2 bg-[#1C1D22] border border-[#34353C] hover:bg-[#2A2B31] text-sm font-bold text-[#F5F5F3] rounded-full transition-colors cursor-pointer"
               >
                 ◀ Previous
               </Link>
             ) : (
-              <span className="px-4 py-2 bg-[#1A1B1F]/30 border border-[#33343A]/40 text-sm font-bold text-[#9A9AA2]/40 rounded cursor-not-allowed">
+              <span className="px-4 py-2 bg-[#1C1D22]/30 border border-[#34353C]/40 text-sm font-bold text-[#9A9AA2]/40 rounded-full cursor-not-allowed">
                 ◀ Previous
               </span>
             )}
@@ -144,12 +144,12 @@ export default async function BrowsePage(props: BrowsePageProps) {
             {page < totalPages ? (
               <Link
                 href={buildPageUrl(page + 1)}
-                className="px-4 py-2 bg-[#1A1B1F] border border-[#33343A] hover:bg-[#26272C] text-sm font-bold text-[#F5F5F3] rounded transition-colors cursor-pointer"
+                className="px-4 py-2 bg-[#1C1D22] border border-[#34353C] hover:bg-[#2A2B31] text-sm font-bold text-[#F5F5F3] rounded-full transition-colors cursor-pointer"
               >
                 Next ▶
               </Link>
             ) : (
-              <span className="px-4 py-2 bg-[#1A1B1F]/30 border border-[#33343A]/40 text-sm font-bold text-[#9A9AA2]/40 rounded cursor-not-allowed">
+              <span className="px-4 py-2 bg-[#1C1D22]/30 border border-[#34353C]/40 text-sm font-bold text-[#9A9AA2]/40 rounded-full cursor-not-allowed">
                 Next ▶
               </span>
             )}
