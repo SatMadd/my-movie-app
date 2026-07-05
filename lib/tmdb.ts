@@ -53,9 +53,8 @@ export async function getTrendingMovies(timeWindow: 'day' | 'week' = 'day'): Pro
   return data.results
 }
 
-export async function getLatestReleases(): Promise<Movie[]> {
-  const data = await fetchTMDB<TMDBResponse<Movie>>('/movie/now_playing')
-  return data.results
+export async function getLatestReleases(page = 1): Promise<TMDBResponse<Movie>> {
+  return await fetchTMDB<TMDBResponse<Movie>>('/movie/now_playing', { page: page.toString() })
 }
 
 export async function getPopularMovies(): Promise<Movie[]> {
